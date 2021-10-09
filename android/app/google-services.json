@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "556428791381",
+    "project_id": "ether-rider",
+    "storage_bucket": "ether-rider.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556428791381:android:ee8e2ac209b7d8db86cedc",
+        "android_client_info": {
+          "package_name": "com.example.etherrider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "556428791381-qupo7ri0ou95bf41td7cid7umv418ld7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLqLekFV4YNOtRmMURHpzYasygIww5EgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "556428791381-qupo7ri0ou95bf41td7cid7umv418ld7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
