@@ -1,3 +1,4 @@
+import 'package:ether_rider/Screens/CarInfoScreen.dart';
 import 'package:ether_rider/Screens/SearchScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,7 +17,8 @@ Future<void> main() async {
       'register': (context) => Register(),
       'userRole': (context) => UserRole(),
       'map': (context) => Map(),
-      'searchScreen': (context) => SearchScreen()
+      'searchScreen': (context) => SearchScreen(),
+      'carInfo': (context) => CarInfoScreen(),
     },
     debugShowCheckedModeBanner: false,
   ));

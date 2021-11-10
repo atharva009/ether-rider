@@ -1,3 +1,4 @@
+import 'package:ether_rider/Screens/CarInfoScreen.dart';
 import 'package:flutter/material.dart';
 
 class UserRole extends StatelessWidget {
@@ -9,7 +10,7 @@ class UserRole extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return Stack(
       fit: StackFit.expand,
-      children: [
+      children: [ 
         Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -178,7 +179,9 @@ class UserRole extends StatelessWidget {
                                 primary: Colors.blue,
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 60, vertical: 20)),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, 'carInfo');
+                            },
                           ),
                         ],
                       ),
