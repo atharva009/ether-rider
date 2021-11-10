@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ether_rider/AllScreens/Login.dart';
 
 class UserRole extends StatelessWidget {
   const UserRole({Key? key}) : super(key: key);
@@ -31,15 +30,15 @@ class UserRole extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 73),
               child: Column(
                 children: [
-                  Text(
-                    'Some Text Here!',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 34,
-                      fontFamily: 'Nisebuschgardens',
-                    ),
-                  ),
+                  // Text(
+                  //   'Some Text Here!',
+                  //   textAlign: TextAlign.center,
+                  //   style: TextStyle(
+                  //     color: Colors.white,
+                  //     fontSize: 34,
+                  //     fontFamily: 'Nisebuschgardens',
+                  //   ),
+                  // ),
                   SizedBox(
                     height: 22,
                   ),
@@ -69,7 +68,7 @@ class UserRole extends StatelessWidget {
                                       height: 80,
                                     ),
                                     Text(
-                                      'Atharva Hankare',
+                                      'USER_NAME',
                                       style: TextStyle(
                                         color: Color.fromRGBO(39, 105, 171, 1),
                                         fontFamily: 'Nunito',
@@ -159,7 +158,9 @@ class UserRole extends StatelessWidget {
                                 primary: Colors.blue,
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 60, vertical: 20)),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, 'map');
+                            },
                           ),
                           SizedBox(
                             height: 20,

@@ -1,3 +1,4 @@
+import 'package:ether_rider/Widgets/ProgressDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:ether_rider/Services/AuthenticationService.dart';
 
@@ -128,11 +129,22 @@ class _LoginState extends State<Login> {
   }
 
   void signInUser() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return ProgressDialog(message: "Authenticating, Please wait...");
+        });
+
     dynamic authResult =
         await _auth.loginUser(_emailController.text, _passwordController.text);
 
     if (authResult == null) {
-      print('Sign in error');
+      Navigator.pop(context);
+      //print('Sign in error');
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Please enter correct credentials"),
+      ));
     } else {
       _emailController.clear();
       _passwordController.clear();

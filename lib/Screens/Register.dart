@@ -1,3 +1,4 @@
+import 'package:ether_rider/Widgets/ProgressDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:ether_rider/Services/AuthenticationService.dart';
 
@@ -257,11 +258,24 @@ class _RegisterState extends State<Register> {
   }
 
   void createUser() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return ProgressDialog(message: "Registering, Please wait...");
+        });
+
     dynamic result = await _auth.createNewUser(
         _emailController.text, _passwordController.text);
 
+    Navigator.pushNamed(context, 'userRole');
+
+    //Add a proper logic here
     if (result == null) {
-      print('Email is not valid');
+      //print('Email is not valid');
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Registration Unsuccessful"),
+      ));
     } else {
       print(result.toString());
       _nameController.clear();
@@ -270,10 +284,13 @@ class _RegisterState extends State<Register> {
       _passwordController.clear();
 
       Navigator.pop(context);
+      Navigator.pop(context);
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Registration Successful"),
       ));
+
+      Navigator.pushNamed(context, 'userRole');
     }
   }
 }
