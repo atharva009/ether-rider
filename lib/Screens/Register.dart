@@ -1,4 +1,5 @@
 import 'package:ether_rider/Widgets/ProgressDialog.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:ether_rider/Services/AuthenticationService.dart';
 
@@ -267,6 +268,7 @@ class _RegisterState extends State<Register> {
 
     dynamic result = await _auth.createNewUser(
         _emailController.text, _passwordController.text);
+        
 
     Navigator.pushNamed(context, 'userRole');
 
