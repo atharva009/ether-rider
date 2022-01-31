@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-
-class CarInfoScreen extends StatelessWidget 
-{
+class CarInfoScreen extends StatelessWidget {
   static const String idScreen = "carinfo";
-  final TextEditingController carModelTextEditingController = TextEditingController();
-  final TextEditingController carNumberTextEditingController = TextEditingController();
-  final TextEditingController carColorTextEditingController = TextEditingController();
-
+  final TextEditingController carModelTextEditingController =
+      TextEditingController();
+  final TextEditingController carNumberTextEditingController =
+      TextEditingController();
+  final TextEditingController carColorTextEditingController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -17,69 +16,80 @@ class CarInfoScreen extends StatelessWidget
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 22.0,),
-              Image.asset("images/logo.png",width: 390.0,height: 250.0 ,),
+              SizedBox(
+                height: 22.0,
+              ),
+              //Image.asset("images/logo.png",width: 390.0,height: 250.0 ,),
               Padding(
                 padding: EdgeInsets.fromLTRB(22.0, 22.0, 22.0, 32.0),
                 child: Column(
                   children: [
-                    SizedBox(height: 12.0,),
-                    Text("Enter Car Details", style: TextStyle(fontFamily: "Brand-Bold", fontSize: 24.0),),
-                    SizedBox(height: 26.0,),
+                    SizedBox(
+                      height: 12.0,
+                    ),
+                    Text(
+                      "Enter Car Details",
+                      style:
+                          TextStyle(fontFamily: "Brand-Bold", fontSize: 24.0),
+                    ),
+                    SizedBox(
+                      height: 26.0,
+                    ),
                     TextField(
                       controller: carModelTextEditingController,
                       decoration: InputDecoration(
                         labelText: "Car Model",
-                        hintStyle: TextStyle(color: Colors.grey, fontSize: 10.0),
-
+                        hintStyle:
+                            TextStyle(color: Colors.grey, fontSize: 10.0),
                       ),
                       style: TextStyle(fontSize: 15.0),
                     ),
-
-                    SizedBox(height: 10.0,),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                     TextField(
                       controller: carNumberTextEditingController,
                       decoration: InputDecoration(
                         labelText: "Car Number",
-                        hintStyle: TextStyle(color: Colors.grey, fontSize: 10.0),
-
+                        hintStyle:
+                            TextStyle(color: Colors.grey, fontSize: 10.0),
                       ),
                       style: TextStyle(fontSize: 15.0),
                     ),
-
-                    SizedBox(height: 10.0,),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                     TextField(
                       controller: carColorTextEditingController,
                       decoration: InputDecoration(
                         labelText: "Car Color",
-                        hintStyle: TextStyle(color: Colors.grey, fontSize: 10.0),
-
+                        hintStyle:
+                            TextStyle(color: Colors.grey, fontSize: 10.0),
                       ),
                       style: TextStyle(fontSize: 15.0),
                     ),
-
-                    SizedBox(height: 42.0,),
-
+                    SizedBox(
+                      height: 42.0,
+                    ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: TextButton(
                         onPressed: () {
-                          if(carModelTextEditingController.text.isEmpty){
+                          if (carModelTextEditingController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("Please enter Car Model"),
-                            ));}
-
-                          else if(carNumberTextEditingController.text.isEmpty){
+                              content: Text("Please enter Car Model"),
+                            ));
+                          } else if (carNumberTextEditingController
+                              .text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("Please enter Car Number"),
-                            ));}
-
-                          else if(carColorTextEditingController.text.isEmpty){
+                              content: Text("Please enter Car Number"),
+                            ));
+                          } else if (carColorTextEditingController
+                              .text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("Please enter Car Color"),
-                          ));
-                          }
-                          else{
+                              content: Text("Please enter Car Color"),
+                            ));
+                          } else {
                             saveCarInfo(context);
                           }
                         },
@@ -88,14 +98,23 @@ class CarInfoScreen extends StatelessWidget
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Next", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.white),),
-                              Icon(Icons.arrow_forward, color: Colors.white, size: 26.0,),
-
-                          ],),
+                              Text(
+                                "Next",
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                              Icon(
+                                Icons.arrow_forward,
+                                color: Colors.white,
+                                size: 26.0,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      ),
-
+                    ),
                   ],
                 ),
               )
@@ -106,18 +125,13 @@ class CarInfoScreen extends StatelessWidget
     );
   }
 
-  void saveCarInfo(context){
-    
+  void saveCarInfo(context) {
     Map carInfoMap = {
       "car_color": carColorTextEditingController.text,
       "car_number": carNumberTextEditingController.text,
       "car_model": carModelTextEditingController.text,
-
     };
 
     //Navigator.pushNamed(context, 'login');
-
-
-    
   }
 }
