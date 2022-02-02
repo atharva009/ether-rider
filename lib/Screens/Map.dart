@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:ether_rider/Assistants/assistantMethods.dart';
+import 'package:ether_rider/DataHandler/appData.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
 class Map extends StatefulWidget {
   Map({Key? key}) : super(key: key);
@@ -33,7 +35,8 @@ class _MapState extends State<Map> {
     newGoogleMapController
         .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
 
-    String address = await AssistantMethods.searchCoordinateAddress(position);
+    String address =
+        await AssistantMethods.searchCoordinateAddress(position, context);
     print("This is your Address :: " + address);
   }
 
@@ -150,7 +153,13 @@ class _MapState extends State<Map> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Add Home"),
+                              Text(Provider.of<AppData>(context)
+                                          .pickUpLocation !=
+                                      null
+                                  ? Provider.of<AppData>(context)
+                                      .pickUpLocation
+                                      .placeName
+                                  : "Add Home"),
                               SizedBox(
                                 height: 4.0,
                               ),
