@@ -1,3 +1,5 @@
+import 'package:ether_rider/configMaps.dart';
+import 'package:ether_rider/main.dart';
 import 'package:flutter/material.dart';
 
 class CarInfoScreen extends StatelessWidget {
@@ -103,7 +105,7 @@ class CarInfoScreen extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.white),
+                                    color: Colors.blue),
                               ),
                               Icon(
                                 Icons.arrow_forward,
@@ -126,12 +128,24 @@ class CarInfoScreen extends StatelessWidget {
   }
 
   void saveCarInfo(context) {
+    
+    String userId = firebaseUser!.uid;
+  
     Map carInfoMap = {
       "car_color": carColorTextEditingController.text,
       "car_number": carNumberTextEditingController.text,
       "car_model": carModelTextEditingController.text,
     };
 
+    //carinfo trial code:
+    usersRef.child(userId).child("car_details").update({
+      "car_color": carColorTextEditingController.text,
+      "car_number": carNumberTextEditingController.text,
+      "car_model": carModelTextEditingController.text,
+    });
+    Navigator.pushNamedAndRemoveUntil(context, CarInfoScreen.idScreen, (route) => false);
+        //
+    }
     //Navigator.pushNamed(context, 'login');
-  }
+  
 }

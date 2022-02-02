@@ -144,14 +144,14 @@ class UserRole extends StatelessWidget {
                       child: Column(
                         children: [
                           SizedBox(
-                            height: 40,
+                            height: 10,
                           ),
                           ElevatedButton(
                             child: Text(
                               'Book a Ride',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 34,
+                                fontSize: 10,
                                 fontFamily: 'Nisebuschgardens',
                               ),
                             ),
