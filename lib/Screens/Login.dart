@@ -1,6 +1,11 @@
+import 'package:ether_rider/Screens/Register.dart';
 import 'package:ether_rider/Widgets/ProgressDialog.dart';
+import 'package:ether_rider/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:ether_rider/Services/AuthenticationService.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -88,8 +93,15 @@ class _LoginState extends State<Login> {
                                 child: IconButton(
                                     color: Colors.white,
                                     onPressed: () {
-                                      if (_key.currentState!.validate()) {
-                                        signInUser();
+
+                                      if(!_emailController.text.contains("@")){
+                                        displayToastMessage("Email address ot valid", context);
+                                      }
+                                      else if(_passwordController.text.isEmpty){
+                                        displayToastMessage("Password is mandatory", context);
+                                      }
+                                      else{
+                                      loginAndAuthenticateUser(context);
                                       }
                                     },
                                     icon: Icon(Icons.arrow_forward_ios)),
@@ -128,32 +140,76 @@ class _LoginState extends State<Login> {
     );
   }
 
-  void signInUser() async {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return ProgressDialog(message: "Authenticating, Please wait...");
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  void loginAndAuthenticateUser(BuildContext context) async{
+    
+    final User? firebaseUser = (await _firebaseAuth.signInWithEmailAndPassword(
+      email: _emailController.text, 
+    password: _passwordController.text
+    ).catchError((errMsg){
+      displayToastMessage("Error. "+ errMsg.toString(), context);
+    })).user;
+
+    if(firebaseUser != null)    //user created
+      {
+        //save user info to database 
+        
+
+        usersRef.child(firebaseUser.uid).once().then((DataSnapshot snap){
+          if(snap.value != null){
+            Navigator.pushNamed(context, 'userRole');
+            displayToastMessage("Logged In", context);
+          }
+          else{
+            _firebaseAuth.signOut();
+            displayToastMessage("Account Doesn't Exist.", context);
+          }
         });
+        
+        
 
-    dynamic authResult =
-        await _auth.loginUser(_emailController.text, _passwordController.text);
+        
+      }
+      else
+      {
+        Navigator.pop(context);
 
-    if (authResult == null) {
-      Navigator.pop(context);
-      //print('Sign in error');
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Please enter correct credentials"),
-      ));
-    } else {
-      _emailController.clear();
-      _passwordController.clear();
+        // error occurred display error
+        displayToastMessage("Error Occured", context);
+      }
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Login Successful"),
-      ));
-
-      Navigator.pushNamed(context, 'userRole');
-    }
   }
+  displayToastMessage(String message, BuildContext context){
+
+      Fluttertoast.showToast(msg: message);
+    
+  }
+  // void signInUser() async {
+  //   showDialog(
+  //       context: context,
+  //       barrierDismissible: false,
+  //       builder: (BuildContext context) {
+  //         return ProgressDialog(message: "Authenticating, Please wait...");
+  //       });
+
+  //   dynamic authResult =
+  //       await _auth.loginUser(_emailController.text, _passwordController.text);
+
+  //   if (authResult == null) {
+  //     Navigator.pop(context);
+  //     //print('Sign in error');
+  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //       content: Text("Please enter correct credentials"),
+  //     ));
+  //   } else {
+  //     _emailController.clear();
+  //     _passwordController.clear();
+
+  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //       content: Text("Login Successful"),
+  //     ));
+
+  //     Navigator.pushNamed(context, 'userRole');
+  //   }
+  // }
 }

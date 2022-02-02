@@ -1,7 +1,12 @@
+import 'package:ether_rider/Screens/UserRole.dart';
 import 'package:ether_rider/Widgets/ProgressDialog.dart';
+import 'package:ether_rider/configMaps.dart';
+import 'package:ether_rider/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:ether_rider/Services/AuthenticationService.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -209,7 +214,8 @@ class _RegisterState extends State<Register> {
                                           color: Colors.white,
                                           onPressed: () {
                                             if (_key.currentState!.validate()) {
-                                              createUser();
+                                              createUser(context);
+                                              
                                             }
                                           },
                                           icon: Icon(
@@ -258,41 +264,85 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  void createUser() async {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return ProgressDialog(message: "Registering, Please wait...");
-        });
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  void createUser(BuildContext context) async{
+    showDialog(context: context, barrierDismissible: false,builder: (BuildContext context){
+      return ProgressDialog(message: "Registering Please wait ... ",);
+    });
 
-    dynamic result = await _auth.createNewUser(
-        _emailController.text, _passwordController.text);
+    final User? firebaseUser = (await _firebaseAuth.createUserWithEmailAndPassword(
+      email: _emailController.text, 
+    password: _passwordController.text
+    ).catchError((errMsg){
+      displayToastMessage("Error. "+ errMsg.toString(), context);
+    })).user;
+
+      if(firebaseUser != null)    //user created
+      {
+        //save user info to database 
+        Map userDataMap = 
+        {
+          "name": _nameController.text.trim(),
+          "email": _emailController.text.trim(),
+          "phone": _phoneController.text.trim()
+        };
+
+        usersRef.child(firebaseUser.uid).set(userDataMap);
+       currentfirebaseUser = firebaseUser;
+        displayToastMessage("Account Created", context);
+
+        Navigator.pushNamed(context, 'userRole');
+      }
+      else
+      {
+        Navigator.pop(context);
+
+        // error occurred display error
+        displayToastMessage("New user account has not been created", context);
+      }
+    }
+
+    displayToastMessage(String message, BuildContext context){
+
+      Fluttertoast.showToast(msg: message);
+    
+  }
+
+  // void createUser() async {
+  //   showDialog(
+  //       context: context,
+  //       barrierDismissible: false,
+  //       builder: (BuildContext context) {
+  //         return ProgressDialog(message: "Registering, Please wait...");
+  //       });
+
+  //   dynamic result = await _auth.createNewUser(
+  //       _emailController.text, _passwordController.text);
         
 
-    Navigator.pushNamed(context, 'userRole');
+  //   Navigator.pushNamed(context, 'userRole');
 
-    //Add a proper logic here
-    if (result == null) {
-      //print('Email is not valid');
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Registration Unsuccessful"),
-      ));
-    } else {
-      print(result.toString());
-      _nameController.clear();
-      _emailController.clear();
-      _phoneController.clear();
-      _passwordController.clear();
+  //   //Add a proper logic here
+  //   if (result == null) {
+  //     //print('Email is not valid');
+  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //       content: Text("Registration Unsuccessful"),
+  //     ));
+  //   } else {
+  //     print(result.toString());
+  //     _nameController.clear();
+  //     _emailController.clear();
+  //     _phoneController.clear();
+  //     _passwordController.clear();
 
-      Navigator.pop(context);
-      Navigator.pop(context);
+  //     Navigator.pop(context);
+  //     Navigator.pop(context);
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Registration Successful"),
-      ));
+  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //       content: Text("Registration Successful"),
+  //     ));
 
-      Navigator.pushNamed(context, 'userRole');
-    }
-  }
+  //     Navigator.pushNamed(context, 'userRole');
+  //   }
+  // }
 }
