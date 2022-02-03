@@ -1,5 +1,6 @@
 import 'package:ether_rider/Screens/Register.dart';
 import 'package:ether_rider/Widgets/ProgressDialog.dart';
+import 'package:ether_rider/configMaps.dart';
 import 'package:ether_rider/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -159,6 +160,7 @@ class _LoginState extends State<Login> {
           if(snap.value != null){
             Navigator.pushNamed(context, 'userRole');
             displayToastMessage("Logged In", context);
+            currentfirebaseUser = firebaseUser;
           }
           else{
             _firebaseAuth.signOut();
