@@ -1,5 +1,3 @@
-//import 'dart:js';
-
 import 'package:ether_rider/Assistants/requestAssistant.dart';
 import 'package:ether_rider/DataHandler/appData.dart';
 import 'package:ether_rider/Models/address.dart';
