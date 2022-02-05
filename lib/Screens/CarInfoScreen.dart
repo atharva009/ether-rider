@@ -1,6 +1,7 @@
 import 'package:ether_rider/configMaps.dart';
 import 'package:ether_rider/main.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CarInfoScreen extends StatelessWidget {
   static const String idScreen = "carinfo";
@@ -129,22 +130,31 @@ class CarInfoScreen extends StatelessWidget {
 
   void saveCarInfo(context) {
     
-    String userId = firebaseUser!.uid;
+    if(firebaseUser != null){
+      String userId = firebaseUser!.uid;
   
     Map carInfoMap = {
       "car_color": carColorTextEditingController.text,
       "car_number": carNumberTextEditingController.text,
       "car_model": carModelTextEditingController.text,
     };
-
+    
     //carinfo trial code:
-    usersRef.child(userId).child("car_details").update({
-      "car_color": carColorTextEditingController.text,
-      "car_number": carNumberTextEditingController.text,
-      "car_model": carModelTextEditingController.text,
-    });
+    usersRef.child(userId).child("car_details").set(carInfoMap);
     Navigator.pushNamedAndRemoveUntil(context, CarInfoScreen.idScreen, (route) => false);
+    }
+    else
+      {
+        Navigator.pop(context);
+
+        // error occurred display error
+        displayToastMessage("New user account has not been created", context);
+      }
         //
+    }
+    displayToastMessage(String message, BuildContext context){
+
+      Fluttertoast.showToast(msg: message);
     }
     //Navigator.pushNamed(context, 'login');
   
