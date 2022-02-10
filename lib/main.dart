@@ -31,6 +31,7 @@ Future<void> main() async {
         'map': (context) => Map(),
         'searchScreen': (context) => SearchScreen(),
         'carInfo': (context) => CarInfoScreen(),
+        CarInfoScreen.idScreen: (context) =>CarInfoScreen(),
       },
       debugShowCheckedModeBanner: false,
     ),

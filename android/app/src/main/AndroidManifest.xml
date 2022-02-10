@@ -9,6 +9,10 @@
    <application
         android:label="ether_rider"
         android:icon="@mipmap/ic_launcher">
+
+    <meta-data android:name="com.here.sdk.access_key_id" android:value="ydVQGamRRjAXkCGPbsTQ-w"/>
+    <meta-data android:name="com.here.sdk.access_key_secret" android:value="l_WRlK8l20w6NzGq7BCCSxSwUGBupVkQyK3YASawGvHDRc3pH8HxDltTTAm7ZNlhCMmGTHwFEATzLmFcynAfdw"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
